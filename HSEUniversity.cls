@@ -43,44 +43,14 @@
 
 \RequirePackage[linktocpage=true,plainpages=false,pdfpagelabels=false]{hyperref}
 
-\RequirePackage{caption}% http://ctan.org/pkg/caption
-
-% ненужно?
-%renewcommand{\appendixtocname}{\textbf{Приложения}}
-%\renewcommand{\appendixpagename}{\textbf{Приложения}}
-
-% какие буквы можно юзать в TOC, тк буквы Ё, З, Й, О, Ч, Ъ, Ы, Ь не должны встречаться
-\def\cyrtoc#1{\ifcase #1\or а\or б\or в\or г\or д\or е\or ж\or и\or к\or л\or м\or н\or п\or р\or с\or т\or у\or ф\or х\or ц\or ш\or щ\or э\or ю\or я\else \@ctrerr \fi}
-
-\newcommand\originalappendix{}
-\let\originalappendix\appendix
-\renewcommand{\appendix}{%
-\originalappendix
-%\renewcommand{\thechapter}{\Asbuk{chapter}}
-\renewcommand{\thechapter}{\cyrtoc{\value{chapter}}}
-\titleformat{\chapter}
-    {\Large\bfseries\centering}
-    {\MakeUppercase{\chaptertitlename}\ \thechapter}{4pt}{}
-%\addtocontents{toc}{\bfseries\protect\value{tocdepth}=\chaptertocdepth}% appendix sections etc. not shown in ToC
-\addtocontents{toc}{\protect\value{tocdepth}=\chaptertocdepth}% appendix sections etc. not shown in ToC
-    
-\renewcommand\addchaptertocentry[2]{
-    \addtocentrydefault{chapter}{}{\MakeUppercase{\appendixname~##1} ##2}% с именем
-%\addtocentrydefault{chapter}{}{\appendixname~##1}% без имени
-%\addtocentrydefault{chapter}{}{\MakeUppercase{\appendixname}~##1}%
-}
-}
-
-
-
-%%%%% КОД %%%%
+%%%%% Listing %%%%
 %New colors defined below
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
-\lstdefinestyle{mystyle}{
+\lstdefinestyle{listingstyle}{
   backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
   keywordstyle=\color{magenta},
   numberstyle=\tiny\color{codegray},
@@ -199,9 +169,6 @@
       \step[fieldsource=language]
       \step[fieldset=hyphenation,origfieldval]
     }
-% \map{
-%   \step[fieldset=hyphenation,fieldvalue={english}]
-% }
   }
 }
 %%%%%%%%%%%%%%%%%%%%%%
@@ -211,8 +178,7 @@
 
 \newcommand{\putbibliography}{
   \chapter**{Библиографический список}
-  %\addcontentsline{toc}{chapter}{\textbf{Библиографический список}}
-    \addcontentsline{toc}{chapter}{Библиографический список}
+  \addcontentsline{toc}{chapter}{Библиографический список}
   \printbibliography[heading=none] %title={Библиографический список}, env=gostbibliography,
 }
 
@@ -385,21 +351,21 @@
   \vfill
 
   студента образовательной программы <<\@specName>> \\
-  по направлению подготовки \textit{\underline{\@specCode}}
+  по направлению подготовки \underline{\@specCode}
 
   \vfill
   \vfill
   \vfill
 
-  %\ifHasReviewer
-  %\begin{minipage}[t]{0.4\textwidth}
-    %Рецензент \\
-   % \@reviewerTitle
+  \ifHasReviewer
+  \begin{minipage}[t]{0.4\textwidth}
+    Рецензент \\
+    \@reviewerTitle
 
-  % \vspace{2mm}
-  %
-  %  \@reviewerName
-  %\end{minipage}
+    \vspace{2mm}
+
+    \@reviewerName
+  \end{minipage}
   \fi
   \hfill
   \begin{minipage}[t]{0.4\textwidth}
@@ -424,7 +390,7 @@
 }
 
 \chapter**{Аннотация}
-
+\thispagestyle{empty}
 \@abstract
 
 \chapter**{Оглавление}
@@ -469,6 +435,26 @@
   \caption{\@figureCaption}
   \end{figure}
 }
+
+% какие буквы можно юзать в TOC, тк буквы Ё, З, Й, О, Ч, Ъ, Ы, Ь не должны встречаться
+\def\cyrtoc#1{\ifcase #1\or а\or б\or в\or г\or д\or е\or ж\or и\or к\or л\or м\or н\or п\or р\or с\or т\or у\or ф\or х\or ц\or ш\or щ\or э\or ю\or я\else \@ctrerr \fi}
+
+\newcommand\originalappendix{}
+\let\originalappendix\appendix
+\renewcommand{\appendix}{%
+  \originalappendix
+  %\renewcommand{\thechapter}{\Asbuk{chapter}}
+  \renewcommand{\thechapter}{\cyrtoc{\value{chapter}}}
+  \titleformat{\chapter}
+    {\Large\bfseries\centering}
+    {\MakeUppercase{\chaptertitlename}\ \thechapter}{4pt}{}
+
+  \addtocontents{toc}{\protect\value{tocdepth}=\chaptertocdepth}
+  \renewcommand\addchaptertocentry[2]{%
+    \addtocentrydefault{chapter}{}{\MakeUppercase{\appendixname~##1} ##2}
+  }
+}
+
 
 \newcommand{\reftable}[1]{см. таблицу ~\ref{#1}}
 \newcommand{\reffig}[1]{Рисунок ~\ref{#1}}
