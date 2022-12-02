@@ -230,9 +230,9 @@
 \def\chapter{
   \@ifstar\chapterstar\@originalchapter
  }
- \def\chapterstar{
+\def\chapterstar{
    \@ifstar\chapter@nonum@notoc\chapter@nonum
- }
+}
 \newcommand\chapter@nonum@notoc[2][]{
    \@originalchapter*{#2}
 }
@@ -243,11 +243,9 @@
 \titlecontents{chapter}% <section-type>
   [0pt]% <left>
   {}% <above-code>
-  %{\bfseries\chaptername\ \thecontentslabel\enskip}% <numbered-entry-format>
-  {\chaptername\ \thecontentslabel\enskip}% <numbered-entry-format>
+  {\bfseries\chaptername\ \thecontentslabel\enskip}% <numbered-entry-format>
   {}% <numberless-entry-format>
-  %{\bfseries\dotfill\contentspage}% <filler-page-format>
-  {\dotfill\contentspage}% <filler-page-format>
+  {\bfseries\dotfill\contentspage}% <filler-page-format>
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -284,7 +282,6 @@
 }
 \DeclareVoidOption{VKR}{
   \def\@typeString{Выпускная квалификационная работа}
-  \HasReviewertrue
 }
 
 \DeclareDefaultOption{%
@@ -313,6 +310,7 @@
 \newcommand{\reviewer}[2]{
   \def\@reviewerTitle{#1}
   \def\@reviewerName{#2}
+  \HasReviewertrue
 }
 \newcommand{\Abstract}[1]{
   \def\@abstract{#1}
@@ -327,7 +325,7 @@
   {
     Пермский филиал федерального государственного автономного \\
     образовательного учреждения высшего образования \\
-    <<Национальный исследовательский университет \\
+    Национальный исследовательский университет \\
     <<Высшая школа экономики>>
   }
 
